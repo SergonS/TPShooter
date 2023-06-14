@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using StarterAssets;
+using UnityEngine.InputSystem;
 
 public class TPSController : MonoBehaviour
 {
@@ -12,30 +13,58 @@ public class TPSController : MonoBehaviour
     private float normalSensitivity;
     [SerializeField]
     private float aimSensitivity;
+    [SerializeField]
+    private LayerMask aimColliderLayerMask;
+    [SerializeField]
+    private Transform debugTransform;
 
-    private ThirdPersonController ThirdPersonController;
+    private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInputs;
 
     private void Awake()
     {
-        ThirdPersonController = GetComponent<ThirdPersonController>();
+        thirdPersonController = GetComponent<ThirdPersonController>();
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
     }
 
     private void Update()
     {
+        Vector3 mouseWorldPosition = Vector3.zero;
+
+        // Getting the center position of the screen for aiming
+
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        {
+            debugTransform.position = raycastHit.point;
+            mouseWorldPosition = raycastHit.point;
+        }
+
         // If the aim button is pressed change to aim camera
         if (starterAssetsInputs.aim)
         {
             // Set the aim camera and decrease sensitivity
             aimVirtualCamera.gameObject.SetActive(true);
-            ThirdPersonController.SetSensitivity(aimSensitivity);
+            thirdPersonController.SetSensitivity(aimSensitivity);
+            thirdPersonController.SetRotateOnMove(false);
+
+            // Make the player turn towards where it's aiming
+            Vector3 worldAimTarget = mouseWorldPosition;
+            worldAimTarget.y = transform.position.y;
+            Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
+
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
         }
         else
         {
             // Set the normal camera and increase sensitivity
             aimVirtualCamera.gameObject.SetActive(false);
-            ThirdPersonController.SetSensitivity(normalSensitivity);
+            thirdPersonController.SetSensitivity(normalSensitivity);
+            thirdPersonController.SetRotateOnMove(true);
         }
+
+        
     }
 }
