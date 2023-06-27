@@ -17,6 +17,10 @@ public class TPSController : MonoBehaviour
     private LayerMask aimColliderLayerMask;
     [SerializeField]
     private Transform debugTransform;
+    [SerializeField]
+    private Transform pfBulletProjectile;
+    [SerializeField]
+    private Transform spawnBulletPosition;
 
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInputs;
@@ -63,6 +67,13 @@ public class TPSController : MonoBehaviour
             aimVirtualCamera.gameObject.SetActive(false);
             thirdPersonController.SetSensitivity(normalSensitivity);
             thirdPersonController.SetRotateOnMove(true);
+        }
+
+        if (starterAssetsInputs.fire)
+        {
+            Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
+            Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+            starterAssetsInputs.fire = false;
         }
 
         
