@@ -681,7 +681,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748870689}
-  m_LocalRotation: {x: 0.10092609, y: -0.000000004279632, z: 4.341433e-10, w: 0.99489397}
+  m_LocalRotation: {x: 0.10092609, y: 0.0000000042796304, z: -4.3414314e-10, w: 0.99489397}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1876,7 +1876,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708108499}
-  m_LocalRotation: {x: 0.11895831, y: -0.000000028666468, z: 0.0000000034345022, w: 0.99289924}
+  m_LocalRotation: {x: 0.11895831, y: -0.000000028666467, z: 0.000000003434502, w: 0.99289924}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2022,7 +2022,7 @@ MonoBehaviour:
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
   m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
+  m_BlendUpdateMethod: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 2
@@ -4217,6 +4217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimVirtualCamera: {fileID: 0}
+  aimLayer: {fileID: 0}
   normalSensitivity: 0
   aimSensitivity: 0
   aimColliderLayerMask:
@@ -4225,6 +4226,7 @@ MonoBehaviour:
   debugTransform: {fileID: 0}
   pfBulletProjectile: {fileID: 0}
   spawnBulletPosition: {fileID: 0}
+  aimDuration: 0.3
 --- !u!114 &6593038282040096523
 MonoBehaviour:
   m_ObjectHideFlags: 0

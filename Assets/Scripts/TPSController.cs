@@ -4,11 +4,14 @@ using UnityEngine;
 using Cinemachine;
 using StarterAssets;
 using UnityEngine.InputSystem;
+using UnityEngine.Animations.Rigging;
 
 public class TPSController : MonoBehaviour
 {
     [SerializeField]
     private CinemachineVirtualCamera aimVirtualCamera;
+    [SerializeField]
+    private Rig aimLayer;
     [SerializeField]
     private float normalSensitivity;
     [SerializeField]
@@ -21,6 +24,8 @@ public class TPSController : MonoBehaviour
     private Transform pfBulletProjectile;
     [SerializeField]
     private Transform spawnBulletPosition;
+    [SerializeField]
+    private float aimDuration = 0.3f;
 
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInputs;
@@ -62,12 +67,17 @@ public class TPSController : MonoBehaviour
             // Activating animation: Pistol Idle
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
 
+            // Increasing weight of rig
+            aimLayer.weight += Time.deltaTime / aimDuration;
+
             // Make the player turn towards where it's aiming
             Vector3 worldAimTarget = mouseWorldPosition;
             worldAimTarget.y = transform.position.y;
             Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
 
             transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+
+            
         }
         else
         {
@@ -78,6 +88,9 @@ public class TPSController : MonoBehaviour
 
             // Dectivating animation: Pistol Idle
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+
+            // Decreasing weight of rig
+            aimLayer.weight -= Time.deltaTime / aimDuration;
         }
 
         if (starterAssetsInputs.fire)
