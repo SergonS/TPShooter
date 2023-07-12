@@ -387,6 +387,16 @@ namespace StarterAssets
             _rotateOnMove = newRotateOnMove;
         }
 
+        public float getMovementX()
+        {
+            return _input.move.x;
+        }
+
+        public float getMovementY()
+        {
+            return _input.move.y;
+        }
+
         private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)

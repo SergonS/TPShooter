@@ -40,6 +40,9 @@ public class TPSController : MonoBehaviour
 
     private void Update()
     {
+        animator.SetFloat("InputX", thirdPersonController.getMovementX());
+        animator.SetFloat("InputY", thirdPersonController.getMovementY());
+
         Vector3 mouseWorldPosition = Vector3.zero;
 
         // Getting the center position of the screen for aiming
@@ -59,6 +62,7 @@ public class TPSController : MonoBehaviour
         // If the aim button is pressed change to aim camera
         if (starterAssetsInputs.aim)
         {
+            animator.SetBool("Aiming", true);
             // Set the aim camera and decrease sensitivity
             aimVirtualCamera.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
@@ -81,6 +85,7 @@ public class TPSController : MonoBehaviour
         }
         else
         {
+            animator.SetBool("Aiming", false);
             // Set the normal camera and increase sensitivity
             aimVirtualCamera.gameObject.SetActive(false);
             thirdPersonController.SetSensitivity(normalSensitivity);
