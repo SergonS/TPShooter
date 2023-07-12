@@ -69,7 +69,7 @@ public class TPSController : MonoBehaviour
             thirdPersonController.SetRotateOnMove(false);
 
             // Activating animation: Pistol Idle
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
+            //animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
 
             // Increasing weight of rig
             aimLayer.weight += Time.deltaTime / aimDuration;
@@ -92,7 +92,7 @@ public class TPSController : MonoBehaviour
             thirdPersonController.SetRotateOnMove(true);
 
             // Dectivating animation: Pistol Idle
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+            //animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
 
             // Decreasing weight of rig
             aimLayer.weight -= Time.deltaTime / aimDuration;
