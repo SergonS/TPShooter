@@ -31,18 +31,30 @@ public class TPSController : MonoBehaviour
     private StarterAssetsInputs starterAssetsInputs;
     private Animator animator;
 
+    RaycastWeapon weapon;
+
     private void Awake()
     {
         thirdPersonController = GetComponent<ThirdPersonController>();
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         animator = GetComponent<Animator>();
+        weapon = GetComponentInChildren<RaycastWeapon>();
     }
 
     private void Update()
     {
+        updatingAnimParams();
+        aimingMechanic();
+    }
+
+    void updatingAnimParams()
+    {
         animator.SetFloat("InputX", thirdPersonController.getMovementX());
         animator.SetFloat("InputY", thirdPersonController.getMovementY());
+    }
 
+    void aimingMechanic()
+    {
         Vector3 mouseWorldPosition = Vector3.zero;
 
         // Getting the center position of the screen for aiming
@@ -80,7 +92,6 @@ public class TPSController : MonoBehaviour
             Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
 
             transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
-
             
         }
         else
@@ -98,13 +109,17 @@ public class TPSController : MonoBehaviour
             aimLayer.weight -= Time.deltaTime / aimDuration;
         }
 
+        
         if (starterAssetsInputs.fire)
         {
-            Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
-            Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+            //Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
+            //Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+            weapon.StartFiring();
             starterAssetsInputs.fire = false;
         }
-
-        
+        else
+        {
+            weapon.StopFiring();
+        }
     }
 }
