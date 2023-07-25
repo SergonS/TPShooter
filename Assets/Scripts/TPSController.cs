@@ -60,11 +60,13 @@ public class TPSController : MonoBehaviour
         // Getting the center position of the screen for aiming
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         Transform hitTransform = null;
 
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
+
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 100f, aimColliderLayerMask))
         {
             debugTransform.position = raycastHit.point;
             mouseWorldPosition = raycastHit.point;
@@ -112,14 +114,19 @@ public class TPSController : MonoBehaviour
         
         if (starterAssetsInputs.fire)
         {
-            //Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
-            //Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
             weapon.StartFiring();
-            starterAssetsInputs.fire = false;
         }
         else
         {
             weapon.StopFiring();
         }
+
+        if (weapon.isFiring)
+        {
+            weapon.UpdateFiring(Time.deltaTime);
+        }
+
+        weapon.UpdateBullets(Time.deltaTime);
+
     }
 }
