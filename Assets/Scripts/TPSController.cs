@@ -10,8 +10,7 @@ public class TPSController : MonoBehaviour
 {
     [SerializeField]
     private CinemachineVirtualCamera aimVirtualCamera;
-    [SerializeField]
-    private Rig aimLayer;
+    //private Rig aimLayer;
     [SerializeField]
     private float normalSensitivity;
     [SerializeField]
@@ -31,14 +30,12 @@ public class TPSController : MonoBehaviour
     private StarterAssetsInputs starterAssetsInputs;
     private Animator animator;
 
-    RaycastWeapon weapon;
 
     private void Awake()
     {
         thirdPersonController = GetComponent<ThirdPersonController>();
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         animator = GetComponent<Animator>();
-        weapon = GetComponentInChildren<RaycastWeapon>();
     }
 
     private void Update()
@@ -86,7 +83,7 @@ public class TPSController : MonoBehaviour
             //animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
 
             // Increasing weight of rig
-            aimLayer.weight += Time.deltaTime / aimDuration;
+            //aimLayer.weight += Time.deltaTime / aimDuration;
 
             // Make the player turn towards where it's aiming
             Vector3 worldAimTarget = mouseWorldPosition;
@@ -108,25 +105,9 @@ public class TPSController : MonoBehaviour
             //animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
 
             // Decreasing weight of rig
-            aimLayer.weight -= Time.deltaTime / aimDuration;
+            //aimLayer.weight -= Time.deltaTime / aimDuration;
         }
 
-        
-        if (starterAssetsInputs.fire)
-        {
-            weapon.StartFiring();
-        }
-        else
-        {
-            weapon.StopFiring();
-        }
-
-        if (weapon.isFiring)
-        {
-            weapon.UpdateFiring(Time.deltaTime);
-        }
-
-        weapon.UpdateBullets(Time.deltaTime);
 
     }
 }
